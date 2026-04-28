@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <provider
+            android:name="com.example.mysdk.MySdkInitProvider"
+            android:authorities="${applicationId}.mysdk-init"
+            android:exported="false"
+            android:initOrder="100" />
+
+        <activity
+            android:name="com.example.mysdk.SdkActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.DeviceDefault.Light.NoActionBar" />
+    </application>
+</manifest>
