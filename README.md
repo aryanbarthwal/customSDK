@@ -4,11 +4,19 @@
 
 ## Installation
 
-JitPack publishing will be added after the repository is uploaded.
+This SDK is intended to be installed through JitPack.
 
 ```kotlin
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven(url = "https://jitpack.io")
+    }
+}
+
 dependencies {
-    implementation("com.github.<your-github-user>:customSDK:<version>")
+    implementation("com.github.aryanbarthwal:customSDK:<version>")
 }
 ```
 

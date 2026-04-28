@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
+import org.gradle.api.publish.maven.MavenPublication
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -8,10 +9,13 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlinCompose)
     alias(libs.plugins.kotlinSerialization)
+    id("maven-publish")
 }
 
 kotlin {
     androidTarget {
+        publishLibraryVariants("release")
+
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_17)
         }
@@ -90,5 +94,18 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+publishing {
+    publications.withType<MavenPublication>().configureEach {
+        artifactId = when (name) {
+            "kotlinMultiplatform" -> rootProject.name
+            "androidRelease" -> "${rootProject.name}-android"
+            "iosX64" -> "${rootProject.name}-iosx64"
+            "iosArm64" -> "${rootProject.name}-iosarm64"
+            "iosSimulatorArm64" -> "${rootProject.name}-iossimulatorarm64"
+            else -> artifactId
+        }
     }
 }
