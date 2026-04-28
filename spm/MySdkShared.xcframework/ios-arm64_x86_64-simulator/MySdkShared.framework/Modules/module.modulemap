@@ -1,0 +1,5 @@
+framework module "MySdkShared" {
+    umbrella header "MySdkShared.h"
+    export *
+    module * { export * }
+}
