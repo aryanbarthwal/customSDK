@@ -29,7 +29,9 @@ internal object SdkRuntime {
 
         return if (
             normalizedUrl.startsWith("http://") ||
-            normalizedUrl.startsWith("https://")
+            normalizedUrl.startsWith("https://") ||
+            normalizedUrl.startsWith("ws://") ||
+            normalizedUrl.startsWith("wss://")
         ) {
             normalizedUrl
         } else {

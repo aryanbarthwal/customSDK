@@ -1,5 +1,7 @@
 package com.example.mysdk
 
+import kotlinx.coroutines.Job
+
 object MySdk {
     fun init(config: SdkConfig) {
         SdkRuntime.initialize(config)
@@ -43,6 +45,17 @@ object MySdk {
         return SdkSseClient.connect(
             url = url,
             headers = headers,
+            listener = listener,
+        )
+    }
+
+    fun connectWebSocket(
+        url: String,
+        listener: SdkWebSocketListener,
+    ): Job {
+        SdkRuntime.requireConfig()
+        return SdkWebSocketClient.connect(
+            url = url,
             listener = listener,
         )
     }

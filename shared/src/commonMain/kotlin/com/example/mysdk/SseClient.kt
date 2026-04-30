@@ -17,7 +17,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CoroutineScope
 
-private val sdkStreamingScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+internal val sdkStreamingScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
 data class SdkServerSentEvent(
     val data: String,
