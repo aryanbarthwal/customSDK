@@ -1,5 +1,5 @@
 group = "com.github.aryanbarthwal"
-version = "1.1.0"
+version = "1.2.0"
 
 plugins {
     alias(libs.plugins.androidLibrary) apply false
