@@ -16,6 +16,17 @@ interface SdkWebSocketListener {
     fun onError(error: Throwable)
 }
 
+class SdkWebSocketConnection internal constructor(
+    private val job: Job,
+) {
+    val isActive: Boolean
+        get() = job.isActive
+
+    fun cancel() {
+        job.cancel()
+    }
+}
+
 private val wsHttpClient = HttpClient {
     install(WebSockets)
 }
@@ -24,7 +35,7 @@ internal object SdkWebSocketClient {
     fun connect(
         url: String,
         listener: SdkWebSocketListener,
-    ): Job {
+    ): SdkWebSocketConnection {
         val connectionJob = sdkStreamingScope.launch {
             try {
                 wsHttpClient.webSocket(SdkRuntime.resolveUrl(url)) {
@@ -44,6 +55,6 @@ internal object SdkWebSocketClient {
                 listener.onError(throwable)
             }
         }
-        return connectionJob
+        return SdkWebSocketConnection(connectionJob)
     }
 }

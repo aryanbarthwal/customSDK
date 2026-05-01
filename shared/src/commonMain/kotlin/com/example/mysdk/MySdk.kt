@@ -52,7 +52,7 @@ object MySdk {
     fun connectWebSocket(
         url: String,
         listener: SdkWebSocketListener,
-    ): Job {
+    ): SdkWebSocketConnection {
         SdkRuntime.requireConfig()
         return SdkWebSocketClient.connect(
             url = url,

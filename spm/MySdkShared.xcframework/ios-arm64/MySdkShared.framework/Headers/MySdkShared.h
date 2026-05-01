@@ -6,9 +6,9 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSValue.h>
 
-@class MSSDemoPost, MSSDemoPostCompanion, MSSKotlinArray<T>, MSSKotlinException, MSSKotlinIllegalStateException, MSSKotlinNothing, MSSKotlinRuntimeException, MSSKotlinThrowable, MSSKotlinx_serialization_coreSerialKind, MSSKotlinx_serialization_coreSerializersModule, MSSMySdk, MSSNameEntity, MSSPlatformSdkBridge, MSSSdkConfig, MSSSdkServerSentEvent, MSSSdkSseConnection;
+@class MSSDemoPost, MSSDemoPostCompanion, MSSKotlinArray<T>, MSSKotlinException, MSSKotlinIllegalStateException, MSSKotlinNothing, MSSKotlinRuntimeException, MSSKotlinThrowable, MSSKotlinx_serialization_coreSerialKind, MSSKotlinx_serialization_coreSerializersModule, MSSMySdk, MSSNameEntity, MSSPlatformSdkBridge, MSSSdkConfig, MSSSdkServerSentEvent, MSSSdkSseConnection, MSSSdkWebSocketConnection;
 
-@protocol MSSKotlinAnnotation, MSSKotlinIterator, MSSKotlinKAnnotatedElement, MSSKotlinKClass, MSSKotlinKClassifier, MSSKotlinKDeclarationContainer, MSSKotlinx_serialization_coreCompositeDecoder, MSSKotlinx_serialization_coreCompositeEncoder, MSSKotlinx_serialization_coreDecoder, MSSKotlinx_serialization_coreDeserializationStrategy, MSSKotlinx_serialization_coreEncoder, MSSKotlinx_serialization_coreKSerializer, MSSKotlinx_serialization_coreSerialDescriptor, MSSKotlinx_serialization_coreSerializationStrategy, MSSKotlinx_serialization_coreSerializersModuleCollector, MSSSdkSseListener;
+@protocol MSSKotlinAnnotation, MSSKotlinIterator, MSSKotlinKAnnotatedElement, MSSKotlinKClass, MSSKotlinKClassifier, MSSKotlinKDeclarationContainer, MSSKotlinx_serialization_coreCompositeDecoder, MSSKotlinx_serialization_coreCompositeEncoder, MSSKotlinx_serialization_coreDecoder, MSSKotlinx_serialization_coreDeserializationStrategy, MSSKotlinx_serialization_coreEncoder, MSSKotlinx_serialization_coreKSerializer, MSSKotlinx_serialization_coreSerialDescriptor, MSSKotlinx_serialization_coreSerializationStrategy, MSSKotlinx_serialization_coreSerializersModuleCollector, MSSSdkSseListener, MSSSdkWebSocketListener;
 
 NS_ASSUME_NONNULL_BEGIN
 #pragma clang diagnostic push
@@ -183,6 +183,7 @@ __attribute__((swift_name("MySdk")))
 @property (class, readonly, getter=shared) MSSMySdk *shared __attribute__((swift_name("shared")));
 - (void)closeSdk __attribute__((swift_name("closeSdk()")));
 - (MSSSdkSseConnection *)connectToServerSentEventsUrl:(NSString *)url listener:(id<MSSSdkSseListener>)listener headers:(NSDictionary<NSString *, NSString *> *)headers __attribute__((swift_name("connectToServerSentEvents(url:listener:headers:)")));
+- (MSSSdkWebSocketConnection *)connectWebSocketUrl:(NSString *)url listener:(id<MSSSdkWebSocketListener>)listener __attribute__((swift_name("connectWebSocket(url:listener:)")));
 
 /**
  * @note This method converts instances of CancellationException to errors.
@@ -269,6 +270,22 @@ __attribute__((swift_name("SdkSseListener")))
 - (void)onClosed __attribute__((swift_name("onClosed()")));
 - (void)onErrorMessage:(NSString *)message __attribute__((swift_name("onError(message:)")));
 - (void)onEventEvent:(MSSSdkServerSentEvent *)event __attribute__((swift_name("onEvent(event:)")));
+- (void)onOpen __attribute__((swift_name("onOpen()")));
+@end
+
+__attribute__((objc_subclassing_restricted))
+__attribute__((swift_name("SdkWebSocketConnection")))
+@interface MSSSdkWebSocketConnection : MSSBase
+- (void)cancel __attribute__((swift_name("cancel()")));
+@property (readonly) BOOL isActive __attribute__((swift_name("isActive")));
+@end
+
+__attribute__((swift_name("SdkWebSocketListener")))
+@protocol MSSSdkWebSocketListener
+@required
+- (void)onClose __attribute__((swift_name("onClose()")));
+- (void)onErrorError:(MSSKotlinThrowable *)error __attribute__((swift_name("onError(error:)")));
+- (void)onMessageMessage:(NSString *)message __attribute__((swift_name("onMessage(message:)")));
 - (void)onOpen __attribute__((swift_name("onOpen()")));
 @end
 
